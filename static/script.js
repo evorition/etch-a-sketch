@@ -12,7 +12,7 @@ function resizeGrid() {
   let gridSize;
 
   do {
-    gridSize = +prompt("Enter a number of squares per side\n Allowed numbers between 1 and 100");
+    gridSize = +prompt("Enter a number of squares per side\nAllowed numbers between 1 and 100");
     console.log(gridSize);
   } while ((gridSize < 0 || gridSize > 100));
 
