@@ -13,8 +13,23 @@
     <h1>Etch-a-Sketch</h1>
     <main>
       <div id="tools">
-        <p id="grid-size"></p>
-        <input type="range" id="resize-range" min="1" max="64" />
+        <input type="color" id="color-picker" />
+        <div>
+          <button class="mode-btn" data-mode="color">Color</button>
+        </div>
+        <div>
+          <button class="mode-btn selected" data-mode="rainbow">Rainbow</button>
+        </div>
+        <div>
+          <button class="mode-btn" data-mode="eraser">Eraser</button>
+        </div>
+        <div>
+          <button id="clear-btn">Clear</button>
+        </div>
+        <div>
+          <p id="grid-size"></p>
+          <input type="range" id="resize-range" min="1" max="64" />
+        </div>
       </div>
       <div id="grid"></div>
     </main>

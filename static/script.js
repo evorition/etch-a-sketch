@@ -1,23 +1,98 @@
 const DEFAULT_GRID_SIZE = 16;
+const DEFAULT_MODE = "rainbow";
 
 const gridElement = document.getElementById("grid");
 const gridSizeDisplay = document.getElementById("grid-size");
 const resizeRangeInputElement = document.getElementById("resize-range");
-const coloredSquares = [];
-let isMouseDown = false;
+const colorPicker = document.getElementById("color-picker");
+const modeButtons = document.querySelectorAll(".mode-btn");
+const clearGridButton = document.getElementById("clear-btn");
 
-gridElement.addEventListener("mousedown", () => {
+const coloredSquares = [];
+
+let isMouseDown = false;
+let selectedMode = DEFAULT_MODE;
+let selectedColor = colorPicker.value;
+
+colorPicker.addEventListener("change", handleColorPickerChange);
+modeButtons.forEach((modeButton) =>
+  modeButton.addEventListener("click", handelModeChange)
+);
+clearGridButton.addEventListener("click", clearColoredSquares);
+
+if ("ontouchstart" in window) {
+  gridElement.addEventListener("touchstart", handleTouchStart);
+  gridElement.addEventListener("touchmove", handleTouchMove);
+  document.addEventListener("touchend", () => {
+    isMouseDown = false;
+  });
+} else {
+  gridElement.addEventListener("mousedown", handleMouseDown);
+  gridElement.addEventListener("mouseover", handleMouseOver);
+  document.addEventListener("mouseup", () => {
+    isMouseDown = false;
+  });
+}
+
+function handleMouseDown(event) {
+  event.preventDefault();
   isMouseDown = true;
-});
-document.addEventListener("mouseup", () => {
-  isMouseDown = false;
-});
+  if (event.target.classList.contains("square")) {
+    changeColor.call(event.target);
+  }
+}
+
+function handleMouseOver(event) {
+  if (isMouseDown && event.target.classList.contains("square")) {
+    changeColor.call(event.target);
+  }
+}
+
+function handleTouchStart(event) {
+  event.preventDefault();
+  isMouseDown = true;
+  if (event.target.classList.contains("square")) {
+    changeColor.call(event.target);
+  }
+}
+
+function handleTouchMove(event) {
+  const coordinates = event.changedTouches[0];
+  const element = document.elementFromPoint(
+    coordinates.clientX,
+    coordinates.clientY
+  );
+  if (isMouseDown && element.classList.contains("square")) {
+    changeColor.call(element);
+  }
+}
+
+function deselectAllButtons() {
+  modeButtons.forEach((button) => {
+    button.classList.remove("selected");
+  });
+}
+
+function handleColorPickerChange(event) {
+  selectedColor = event.target.value;
+}
+
+function handelModeChange(event) {
+  deselectAllButtons();
+  selectedMode = event.target.dataset.mode;
+  event.target.classList.add("selected");
+}
 
 function changeColor() {
-  if (isMouseDown) {
-    console.log("I'm here");
+  if (selectedMode === "color") {
+    this.style.backgroundColor = selectedColor;
+    coloredSquares.push(this);
+  } else if (selectedMode === "rainbow") {
     const randomColor = Math.floor(Math.random() * 16777215).toString(16);
     this.style.backgroundColor = `#${randomColor}`;
+    coloredSquares.push(this);
+  } else if (selectedMode === "eraser") {
+    this.style.backgroundColor = "#FFFFFF";
     coloredSquares.push(this);
   }
 }
@@ -46,12 +121,6 @@ function adjustGridSize(gridSize) {
       gridElement.removeChild(gridElement.firstChild);
     }
   }
-
-  gridElement.addEventListener("mouseover", (event) => {
-    if (event.target.classList.contains("square")) {
-      changeColor.call(event.target);
-    }
-  });
 }
 
 function handleGridSizeChange(event) {
