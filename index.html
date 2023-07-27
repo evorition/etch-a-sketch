@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0 maximum-scale=1.0, user-scalable=0"
+    />
     <link href="./static/style.css" rel="stylesheet" />
     <script src="./static/script.js" defer></script>
     <title>Etch-a-Sketch</title>
@@ -14,19 +17,11 @@
     <main>
       <div id="tools">
         <input type="color" id="color-picker" />
-        <div>
-          <button class="mode-btn" data-mode="color">Color</button>
-        </div>
-        <div>
-          <button class="mode-btn selected" data-mode="rainbow">Rainbow</button>
-        </div>
-        <div>
-          <button class="mode-btn" data-mode="eraser">Eraser</button>
-        </div>
-        <div>
-          <button id="clear-btn">Clear</button>
-        </div>
-        <div>
+        <button class="mode-btn" data-mode="color">Color</button>
+        <button class="mode-btn selected" data-mode="rainbow">Rainbow</button>
+        <button class="mode-btn" data-mode="eraser">Eraser</button>
+        <button id="clear-btn">Clear</button>
+        <div id="grid-size-container">
           <p id="grid-size"></p>
           <input type="range" id="resize-range" min="1" max="64" />
         </div>

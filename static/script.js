@@ -20,19 +20,19 @@ modeButtons.forEach((modeButton) =>
 );
 clearGridButton.addEventListener("click", clearColoredSquares);
 
-if ("ontouchstart" in window) {
-  gridElement.addEventListener("touchstart", handleTouchStart);
-  gridElement.addEventListener("touchmove", handleTouchMove);
-  document.addEventListener("touchend", () => {
-    isMouseDown = false;
-  });
-} else {
-  gridElement.addEventListener("mousedown", handleMouseDown);
-  gridElement.addEventListener("mouseover", handleMouseOver);
-  document.addEventListener("mouseup", () => {
-    isMouseDown = false;
-  });
-}
+// Touch
+gridElement.addEventListener("touchstart", handleTouchStart);
+gridElement.addEventListener("touchmove", handleTouchMove);
+document.addEventListener("touchend", () => {
+  isMouseDown = false;
+});
+
+// Mouse
+gridElement.addEventListener("mousedown", handleMouseDown);
+gridElement.addEventListener("mouseover", handleMouseOver);
+document.addEventListener("mouseup", () => {
+  isMouseDown = false;
+});
 
 function handleMouseDown(event) {
   event.preventDefault();
